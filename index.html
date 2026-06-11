@@ -627,6 +627,108 @@ body{
 .modal-card-back,.modal-back{background:linear-gradient(135deg,#050507,#ff0099,#7b2cff) !important;border:2px solid #ffd1f3 !important;box-shadow:0 0 32px rgba(255,59,200,.72) !important;}
 .video-text,.hint{color:#ffd1f3 !important;text-shadow:0 0 12px #ff3bc8,0 0 22px #ff0099 !important;}
 
+
+/* === CORREÇÕES SOLICITADAS 11/06 === */
+
+/* 1) Remove a esfera/BP do cabeçalho e libera o título para ocupar toda a largura */
+.header::before,
+.header:before{
+    display:none!important;
+    content:none!important;
+    width:0!important;
+    height:0!important;
+    opacity:0!important;
+    pointer-events:none!important;
+}
+.header::after,
+.header:after{
+    pointer-events:none!important;
+}
+.header{
+    padding:14px 14px 10px!important;
+}
+.vip-title-box{
+    width:100%!important;
+    max-width:100%!important;
+    padding-right:0!important;
+    margin:0!important;
+    align-items:flex-start!important;
+    text-align:left!important;
+}
+.vip-title-main{
+    width:100%!important;
+    max-width:100%!important;
+    font-size:clamp(38px,13vw,72px)!important;
+    letter-spacing:3px!important;
+    white-space:nowrap!important;
+}
+.vip-title-sub{
+    width:100%!important;
+    padding-right:0!important;
+}
+#progressText{
+    justify-content:flex-start!important;
+    text-align:left!important;
+    margin:4px 0 4px 0!important;
+}
+
+/* 2) Remove qualquer descrição "Figurinhas 001 até 030" dos banners */
+.selection-banner div[style*="Figurinhas"],
+.selection-banner small,
+.selection-banner .banner-desc,
+.selection-banner .album-desc{
+    display:none!important;
+}
+.selection-banner .banner-title{
+    width:100%!important;
+}
+
+/* 3) Miniatura revelada ocupa 100% do quadrinho */
+.sticker-slot.filled{
+    padding:0!important;
+    overflow:hidden!important;
+}
+.sticker-slot.filled .sticker-card{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    padding:0!important;
+    margin:0!important;
+    border-radius:12px!important;
+    overflow:hidden!important;
+    background:#000!important;
+}
+.sticker-slot.filled .sticker-avatar.has-img{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:12px!important;
+    background:#000!important;
+    overflow:hidden!important;
+}
+.sticker-slot.filled .sticker-avatar.has-img .player-png{
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    display:block!important;
+    border-radius:12px!important;
+}
+.sticker-slot.filled .sticker-tag,
+.sticker-slot.filled .sticker-name,
+.sticker-slot.filled .sticker-avatar.has-img span,
+.sticker-slot.filled .sticker-avatar.has-img::after{
+    display:none!important;
+    content:none!important;
+}
+
 </style>
 </head>
 <body>
@@ -701,7 +803,7 @@ function initAlbum(){
    const page=document.createElement('div'); page.id=`page-${team.key}`; page.className='page-section'+(idx===0?' active':'');
    const bannerClass = "selection-banner";
    const bannerStyle = `--c1:${team.c1};--c2:${team.c2}`;
-   page.innerHTML=`<div class="${bannerClass}" style="${bannerStyle}"><div class="banner-title"><span class="big-flag">${team.flag}</span><span>${team.name}</span></div><div style="font-size:12px;font-weight:900;opacity:.9;margin-top:4px">Figurinhas ${String(team.start).padStart(3,'0')} até ${String(team.start+team.count-1).padStart(3,'0')}</div></div><div class="stickers-grid" id="grid-${team.key}"></div>`;
+   page.innerHTML=`<div class="${bannerClass}" style="${bannerStyle}"><div class="banner-title"><span class="big-flag">${team.flag}</span><span>${team.name}</span></div></div><div class="stickers-grid" id="grid-${team.key}"></div>`;
    content.appendChild(page);
    const grid=page.querySelector(`#grid-${team.key}`);
    for(let i=0;i<team.count;i++){const slot=document.createElement('div');slot.className='sticker-slot';slot.id=`slot-${team.key}-${i}`;slot.innerHTML=`<span class="slot-number">${cardCode(team,i)}</span>`;grid.appendChild(slot)}
